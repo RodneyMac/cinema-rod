@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react';
+import Filter from '../../components/Filter/Filter';
 
 const Movies = () => {
   const [movieList, setMoviesList] = useState([]);
+  const [select, setSelect] = useState({});
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -13,14 +16,21 @@ const Movies = () => {
     setMoviesList(movies.results);
   }
 
+  const handleSelect = (e) => {
+    setSelect(e.target.name);
+    console.log("Title:", e.target.name);
+    console.log("ID:", e.target.id);
+  }
+
   return (
-    <div className="text-white md:w-auto flex flex-col flex-wrap w-full">
+    <div className="w-full max-w-4xl flex flex-col justify-center items-center m-auto">
+      <Filter/>
       <h2 className='text-green-500'>MOVIES:</h2>
       <ol className='text-white grid grid-cols-4 grid-rows-5 items-center justify-items-center'>
         {movieList.map((item) => (
-          <li className='text-gray-50 p-4 flex flex-col justify-center items-center m-auto max-w-xs' key={item.id}>
-            <img src={"https://image.tmdb.org/t/p/w500" + item.poster_path} alt="movie" className='w-32 h-32 cursor-pointer border'/>
-            <p className='w-32'>{item.title}</p>
+          <li className='text-gray-50 my-6 mx-6 p-2 flex flex-col justify-center items-center' key={item.id}>
+            <img src={"https://image.tmdb.org/t/p/w500" + item.poster_path} alt="movie" className='cursor-pointer border rounded' id={item.id} name={item.title} onClick={handleSelect} value={select}/>
+            <p className='w-48'>{item.title}</p>
           </li>
         ))}
       </ol>
