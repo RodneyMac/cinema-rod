@@ -4,7 +4,7 @@ import Movies from './views/Movies/Movies';
 
 function App() {
   return (
-    <div className="w-full max-w-full flex flex-col justify-center">
+    <div className="flex flex-col">
       <Nav/>
       <Movies/>
     </div>

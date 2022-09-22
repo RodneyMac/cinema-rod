@@ -1,3 +1,4 @@
+// import { isDisabled } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
 
 const seatsList = [
@@ -25,9 +26,29 @@ const seatsList = [
 
 const MovieRequest = () => {
   const [selected, setSelected] = useState(seatsList);
+  const [count, setCount] = useState(0);
 
-  const handleSelectSeat = () => {
+  const handleSelectSeat = (e) => {
     setSelected(!selected);
+
+    console.log(e.target.value);
+
+    setCount({
+      ...count,
+      [e.target.name] : e.target.value
+    });
+
+    if(!e.target.classList.contains("active")) {
+      e.target.classList.add("active");
+      setCount(count + 1);
+      if(e.target.value === "false") {
+        e.target.classList.add("no-active");
+      }
+    } else {
+      e.target.classList.remove("active");
+      setCount(count - 1);
+    }
+    
     // console.log("ID:", e.target.id);
   };
 
@@ -46,13 +67,16 @@ const MovieRequest = () => {
           <h4>Seats</h4>
           <div className="w-40 h-40 grid grid-cols-4 grid-rows-4 gap-2">
             {seatsList.map((item) => (
-              <button key={item.id} id={item.id}
-                className={item.status ? "bg-slate-200 cursor-pointer rounded focus:bg-green-500 focus:text-white" : "bg-red-500 text-white cursor-pointer rounded"}
-                onClick={handleSelectSeat}
+              <button key={item.id} id={item.id} value={item.status}
+                className={item.status ? "bg-slate-200 cursor-pointer rounded" : "no-active rounded focus:invalid"}
+                onClick={item.status ? handleSelectSeat : null}
               >
                 {item.title}
               </button>
             ))}
+            <div className="flex text-blue-800">
+              Quantity:<h4 className="mx-2 text-green-600">{count}</h4>
+            </div>
           </div>
         </div>
       </div>

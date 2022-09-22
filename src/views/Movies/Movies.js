@@ -31,7 +31,7 @@ const Movies = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl flex flex-col justify-center items-center m-auto">
+    <div className="max-w-4xl flex flex-col m-auto">
       <Filter
         movieList={movieList}
         setFiltered={setFiltered}
