@@ -26,7 +26,8 @@ const Movies = () => {
   const handleSelect = (e) => {
     setSelect(e.target.name);
     setShowModal(!showModal);
-    console.log("Title:", e.target.name);
+    setShowModal(e.target.name);
+    // console.log("Title:", e.target.name);
     // console.log("ID:", e.target.id);
   };
 
@@ -38,7 +39,7 @@ const Movies = () => {
         activeGenre={activeGenre}
         setActiveGenre={setActiveGenre}
       />
-      {showModal && <MovieRequest/>}
+      {showModal && <MovieRequest showModal={showModal}/>}
       <h2 className="text-green-500">MOVIES:</h2>
       <ol className="text-white grid grid-cols-4 grid-rows-5 items-center justify-items-center">
         {filtered.map((item) => (

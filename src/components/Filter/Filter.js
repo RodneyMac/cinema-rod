@@ -1,19 +1,16 @@
 import React, { useEffect } from "react";
 
 const Filter = ({ setActiveGenre, activeGenre, setFiltered, movieList }) => {
-  useEffect(
-    () => {
-      if (activeGenre === 0) {
-        setFiltered(movieList);
-        return;
-      }
-      const filtered = movieList.filter((movie) =>
-        movie.genre_ids.includes(activeGenre)
-      );
-      setFiltered(filtered);
-    },
-    [activeGenre]
-  );
+  useEffect(() => {
+    if (activeGenre === 0) {
+      setFiltered(movieList);
+      return;
+    }
+    const filtered = movieList.filter((movie) =>
+      movie.genre_ids.includes(activeGenre)
+    );
+    setFiltered(filtered);
+  }, [activeGenre]);
 
   return (
     <div className="flex justify-center my-2">
