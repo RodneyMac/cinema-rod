@@ -8,6 +8,7 @@ const Movies = () => {
   const [filtered, setFiltered] = useState([]);
   const [activeGenre, setActiveGenre] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -26,7 +27,9 @@ const Movies = () => {
   const handleSelect = (e) => {
     setSelect(e.target.name);
     setShowModal(!showModal);
-    setShowModal(e.target.name);
+    setShowModal(e.target.id);
+    setDescription(e.target.title);
+    // console.log("Description:", e.target.title);
     // console.log("Title:", e.target.name);
     // console.log("ID:", e.target.id);
   };
@@ -39,7 +42,17 @@ const Movies = () => {
         activeGenre={activeGenre}
         setActiveGenre={setActiveGenre}
       />
-      {showModal && <MovieRequest showModal={showModal}/>}
+      {/* <div> */}
+        {showModal && (
+          <MovieRequest
+            showModal={showModal}
+            setShowModal={setShowModal}
+            select={select}
+            description={description}
+            setDescription={setDescription}
+          />
+        )}
+      {/* </div> */}
       <h2 className="text-green-500">MOVIES:</h2>
       <ol className="text-white grid grid-cols-4 grid-rows-5 items-center justify-items-center">
         {filtered.map((item) => (
@@ -53,6 +66,7 @@ const Movies = () => {
               className="cursor-pointer border rounded"
               id={item.id}
               name={item.title}
+              title={item.overview}
               onClick={handleSelect}
               value={select}
             />
