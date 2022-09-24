@@ -67,8 +67,9 @@ const seatsList = [
 const MovieRequest = ({ showModal, setShowModal, select, description }) => {
   const [selected, setSelected] = useState(seatsList);
   const [count, setCount] = useState(0);
-  const [hour, setHour] = useState();
+  const [hour, setHour] = useState("");
   const [listId, setListId] = useState();
+  const [detail, setDetail] = useState("");
 
   const handleSelectSeat = (e) => {
     setSelected(!selected);
@@ -77,32 +78,28 @@ const MovieRequest = ({ showModal, setShowModal, select, description }) => {
       [e.target.name]: e.target.value,
     });
 
-    // setListId({
-    //   ...listId,
-    //   [e.target.id] : e.target.id
-    // });
-
     if (!e.target.classList.contains("active")) {
       e.target.classList.add("active");
       setCount(count + 1);
       setListId({
         ...listId,
-        [e.target.id] : e.target.title
+        [e.target.id]: e.target.title,
       });
+      setHour(e.target.value);
       if (e.target.value === "false") {
         e.target.classList.add("no-active");
       }
     } else {
       e.target.classList.remove("active");
       setCount(count - 1);
-      setListId("");
+      setListId({ ...(listId.length - 1) });
+      setHour(e.target.value);
     }
     // console.log("ID:", e.target.id);
   };
 
   const handleSend = (e) => {
     e.preventDefault();
-    setHour();
     console.log("Movie:", select);
     console.log("Ticket/s:", count);
     console.log("Seat/s number:", listId);
@@ -111,35 +108,39 @@ const MovieRequest = ({ showModal, setShowModal, select, description }) => {
   };
 
   return (
-    <div className="w-90 h-30 bg-white rounded relative top-20 mb-20 sticky flex flex-col">
+    <div className="w-auto h-auto mt-20 mb-20 flex flex-col justify-center bg-white rounded inset-0 fixed mx-4">
       <button
-        className="flex hover:text-red-700 w-8 h-8 absolute right-0"
+        className="flex hover:text-red-700 w-8 h-8 absolute right-0 top-0 bottom-0"
         onClick={() => setShowModal(!showModal)}
       >
         <IoClose className="w-8 h-8" />
       </button>
-      <h2 className="text-slate-800 font-bold my-2">Movie Request</h2>
-      <div className="text-blue-700 flex flex-col m-auto items-center p-4 my-2 w-96 border rounded border-gray-200">
+      <h2 className="text-slate-800 font-bold">Movie Request</h2>
+      <div className="text-blue-700 flex flex-col m-auto self-center items-center my-2 w-11/12 mx-4 border rounded border-gray-200">
         <div className="font-bold">Movie:</div>
         <h4 className="text-gray-800 font-bold">{select}</h4>
-        <div>
+        <div className="p-4">
           <div className="font-bold">Overview:</div>
-          <div className="text-gray-800">{description}</div>
+          <textarea className="text-gray-800 p-2 text-center border rounded" value={description} onChange={setDetail}>{detail}</textarea>
         </div>
       </div>
-      <div className="grid grid-cols-2">
-        <div className="mt-2">
-          <select name="hour" className="w-40 cursor-pointer" onChange={(e) => setHour(e.target.value)}>
-            <option value="Hour">Hour</option>
-            <option value="13:00 hs" name={hour}>13:00 hs</option>
-            <option value="15:00 hs" name={hour}>15:00 hs</option>
+      <div className="grid grid-cols-2 self-center w-11/12 border rounded">
+        <div className="self-center">
+          <select
+            name="hour"
+            className="w-20 cursor-pointer border"
+            onChange={(e) => setHour(e.target.value)}
+          >
+            <option>Hour</option>
+            <option value="13:00 hs">13:00 hs</option>
+            <option value="15:00 hs">15:00 hs</option>
           </select>
         </div>
         <div className="flex flex-col justify-center items-center">
           <h4>Seats</h4>
-          <div className="w-40 h-40 grid grid-cols-4 grid-rows-4 gap-2 items-center">
+          <div className="grid grid-cols-4 grid-rows-4 gap-2 items-center">
             {seatsList.map((item) => (
-              <div key={item.id}>
+              <div className="" key={item.id}>
                 <button
                   id={item.id}
                   value={item.status}

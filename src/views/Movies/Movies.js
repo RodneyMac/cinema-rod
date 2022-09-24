@@ -35,29 +35,18 @@ const Movies = () => {
   };
 
   return (
-    <div className="max-w-4xl flex flex-col m-auto">
+    <div className="w-full max-w-4xl flex flex-col m-auto">
       <Filter
         movieList={movieList}
         setFiltered={setFiltered}
         activeGenre={activeGenre}
         setActiveGenre={setActiveGenre}
       />
-      {/* <div> */}
-        {showModal && (
-          <MovieRequest
-            showModal={showModal}
-            setShowModal={setShowModal}
-            select={select}
-            description={description}
-            setDescription={setDescription}
-          />
-        )}
-      {/* </div> */}
-      <h2 className="text-green-500">MOVIES:</h2>
-      <ol className="text-white grid grid-cols-4 grid-rows-5 items-center justify-items-center">
+      <h2 className="text-green-500">MOVIES</h2>
+      <ol className="text-white grid grid-cols-2 grid-rows-5 items-center justify-items-center">
         {filtered.map((item) => (
           <li
-            className="text-gray-50 my-6 mx-6 p-2 flex flex-col justify-center items-center"
+            className="text-gray-50 p-2 flex flex-col justify-center items-center"
             key={item.id}
           >
             <img
@@ -74,6 +63,15 @@ const Movies = () => {
           </li>
         ))}
       </ol>
+      {showModal && (
+        <MovieRequest
+          showModal={showModal}
+          setShowModal={setShowModal}
+          select={select}
+          description={description}
+          setDescription={setDescription}
+        />
+      )}
     </div>
   );
 };
